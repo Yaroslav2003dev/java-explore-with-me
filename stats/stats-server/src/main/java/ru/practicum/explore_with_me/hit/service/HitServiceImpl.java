@@ -30,9 +30,9 @@ public class HitServiceImpl implements HitService {
         List<StatsDto> statsList;
         if (uris != null && !uris.isEmpty()) {
             if (unique) {
-                statsList = hitRepository.findAllByListIpUniqueIp(start, end, uris);
+                statsList = hitRepository.findAllByListUriUniqueIp(start, end, uris);
             } else {
-                statsList = hitRepository.findAllByListIpNoUniqueIp(start, end, uris);
+                statsList = hitRepository.findAllByListUriNoUniqueIp(start, end, uris);
             }
         } else {
             if (unique) {
