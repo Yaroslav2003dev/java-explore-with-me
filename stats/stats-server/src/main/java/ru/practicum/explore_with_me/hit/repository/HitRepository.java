@@ -21,12 +21,12 @@ public interface HitRepository extends JpaRepository<Hit, Long> {
     List<StatsDto> findAllUniqueIp(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     @Query("""
-                select new ru.practicum.explore_with_me.hit.dto.StatsDto(h.app, h.uri, count(Distinct(h.ip))) from Hit h where h.ip in :listIp and h.timestamp between :start and :end group by h.app,h.uri
+                select new ru.practicum.explore_with_me.hit.dto.StatsDto(h.app, h.uri, count(Distinct(h.ip))) from Hit h where h.uri in :listUri and h.timestamp between :start and :end group by h.app,h.uri
             """)
-    List<StatsDto> findAllByListIpUniqueIp(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("listIp") List<String> listIp);
+    List<StatsDto> findAllByListIpUniqueIp(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("listUri") List<String> listUri);
 
     @Query("""
-                select new ru.practicum.explore_with_me.hit.dto.StatsDto(h.app, h.uri, count(h.ip)) from Hit h where h.ip in :listIp and h.timestamp between :start and :end group by h.app,h.uri
+                select new ru.practicum.explore_with_me.hit.dto.StatsDto(h.app, h.uri, count(h.ip)) from Hit h where h.uri in :listUri and h.timestamp between :start and :end group by h.app,h.uri
             """)
-    List<StatsDto> findAllByListIpNoUniqueIp(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("listIp") List<String> listIp);
+    List<StatsDto> findAllByListIpNoUniqueIp(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("listUri") List<String> listUri);
 }
