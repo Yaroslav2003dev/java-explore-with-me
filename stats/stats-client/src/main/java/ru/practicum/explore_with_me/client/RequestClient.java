@@ -3,11 +3,14 @@ package ru.practicum.explore_with_me.client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.explore_with_me.hit.dto.HitDto;
+import ru.practicum.explore_with_me.hit.dto.StatsDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +27,8 @@ public class RequestClient extends BaseClient {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
-                        .requestFactory(() -> new HttpComponentsClientHttpRequestFactory())
+//                        .requestFactory(() -> new HttpComponentsClientHttpRequestFactory())
+                        .requestFactory(SimpleClientHttpRequestFactory::new)
                         .build()
         );
     }
@@ -34,21 +38,23 @@ public class RequestClient extends BaseClient {
     }
 
 
-    public ResponseEntity<Object> getStat(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
-        StringBuilder urisBuilder = new StringBuilder();
+    public ResponseEntity<List<StatsDto>> getStat(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromPath("/stats")
+                .queryParam("start", start)
+                .queryParam("end", end)
+                .queryParam("unique", unique);
 
-        Map<String, Object> urlVariables = Map.of(
-                "start", start.format(formatter),
-                "end", end.format(formatter),
-                "unique", unique);
-
-        if (uris != null && !uris.isEmpty()) {
-            for (String uri : uris) {
-                urisBuilder.append("&uris=").append(uri);
-            }
+        if (uris != null) {
+            builder.queryParam("uris", uris.toArray());
         }
-        String uri = "/stats?start={start}&end={end}" + urisBuilder + "&unique={unique}";
-        return get(uri, urlVariables);
+
+        return get(
+                builder.toUriString(),
+                Map.of(),
+                new ParameterizedTypeReference<List<StatsDto>>() {
+                }
+        );
     }
 
 }

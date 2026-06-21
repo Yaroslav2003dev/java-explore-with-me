@@ -21,7 +21,7 @@ public class HitController {
     @PostMapping("/hit")
     public ResponseEntity<HitDto> addHit(@Valid @RequestBody HitDto hitDto) {
         hitService.addHit(hitDto);
-        return new ResponseEntity<>(hitDto, HttpStatus.OK);
+        return new ResponseEntity<>(hitDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/stats")

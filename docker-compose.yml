@@ -4,7 +4,7 @@ services:
     ports:
       - "6541:5432"
     environment:
-      POSTGRES_DB: stats
+      POSTGRES_DB: hits
       POSTGRES_USER: dbuser
       POSTGRES_PASSWORD: 12345
 
@@ -15,3 +15,20 @@ services:
       - "9090:9090"
     depends_on:
       - stats-db
+
+  main-db:
+    image: postgres:16.1
+    ports:
+      - "6542:5432"
+    environment:
+      POSTGRES_DB: main
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: 12345
+
+
+  main-server:
+    build: ./main-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - main-db
