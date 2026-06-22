@@ -22,7 +22,7 @@ public class AdminUserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getUserDtoList(@RequestParam(value = "ids", required = false) List<Long> ids, @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from, @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
+    public ResponseEntity<List<UserDto>> getUsers(@RequestParam(value = "ids", required = false) List<Long> ids, @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from, @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
         return new ResponseEntity<>(userService.getListUserDtoByIds(ids, from, size), HttpStatus.OK);
     }
 

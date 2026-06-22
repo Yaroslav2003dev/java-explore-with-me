@@ -12,9 +12,9 @@ public class CategoryMapper {
     }
 
     public static Category toCategory(NewCategoryDto newCategoryRequest) {
-        Category category = new Category();
-        category.setName(newCategoryRequest.getName());
-        return category;
+        return Category.builder()
+                .name(newCategoryRequest.getName())
+                .build();
     }
 
     public static Category updatCategoryFields(Category category, UpdateCategoryRequest updateCategoryRequest) {

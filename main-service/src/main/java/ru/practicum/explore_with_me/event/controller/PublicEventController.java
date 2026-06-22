@@ -23,7 +23,7 @@ public class PublicEventController {
     private final EventService eventService;
 
     @GetMapping
-    public ResponseEntity<List<EventShortDto>> getEventShortDtoList(@RequestParam(required = false, name = "text") String text,
+    public ResponseEntity<List<EventShortDto>> getEvents(@RequestParam(required = false, name = "text") String text,
                                                                     @RequestParam(required = false, name = "categories") List<Long> categories,
                                                                     @RequestParam(required = false, name = "paid") Boolean paid,
                                                                     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @RequestParam(required = false, name = "rangeStart") LocalDateTime rangeStart,
@@ -38,7 +38,7 @@ public class PublicEventController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventFullDto> getEventShortDtoById(@PathVariable Long id, HttpServletRequest request) {
+    public ResponseEntity<EventFullDto> getEventById(@PathVariable Long id, HttpServletRequest request) {
         return new ResponseEntity<>(eventService.getEventByIdForAll(id, request), HttpStatus.OK);
     }
 }

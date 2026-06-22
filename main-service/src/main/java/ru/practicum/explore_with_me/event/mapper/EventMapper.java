@@ -12,16 +12,16 @@ import java.util.List;
 public class EventMapper {
 
     public static Event toEvent(NewEventDto newEventDto, Category category) {
-        Event event = new Event();
-        event.setEventDate(newEventDto.getEventDate());
-        event.setCategory(category);
-        event.setAnnotation(newEventDto.getAnnotation());
-        event.setDescription(newEventDto.getDescription());
-        event.setPaid(newEventDto.isPaid());
-        event.setRequestModeration(newEventDto.isRequestModeration());
-        event.setParticipantLimit(newEventDto.getParticipantLimit());
-        event.setTitle(newEventDto.getTitle());
-        return event;
+        return Event.builder()
+                .eventDate(newEventDto.getEventDate())
+                .category(category)
+                .annotation(newEventDto.getAnnotation())
+                .description(newEventDto.getDescription())
+                .paid(newEventDto.isPaid())
+                .requestModeration(newEventDto.isRequestModeration())
+                .participantLimit(newEventDto.getParticipantLimit())
+                .title(newEventDto.getTitle())
+                .build();
     }
 
     public static EventFullDto toEventFullDto(Event event) {

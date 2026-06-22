@@ -12,10 +12,10 @@ import java.util.List;
 
 public class CompilationMapper {
     public static Compilation toCompilation(NewCompilationRequest newCompilationRequest) {
-        Compilation compilation = new Compilation();
-        compilation.setPinned(newCompilationRequest.getPinned() != null ? newCompilationRequest.getPinned() : false);
-        compilation.setTitle(newCompilationRequest.getTitle());
-        return compilation;
+        return Compilation.builder()
+                .pinned(newCompilationRequest.getPinned() != null ? newCompilationRequest.getPinned() : false)
+                .title(newCompilationRequest.getTitle())
+                .build();
     }
 
     public static Compilation updateCompilationFields(UpdateCompilationRequest updateCompilationRequest, Compilation compilation) {

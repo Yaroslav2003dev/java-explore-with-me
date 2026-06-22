@@ -17,7 +17,7 @@ public class PrivateRequestController {
     private final ParticipationRequestService participationRequestService;
 
     @GetMapping
-    public ResponseEntity<List<ParticipationRequestDto>> getParticipationRequestDto(@PathVariable Long userId) {
+    public ResponseEntity<List<ParticipationRequestDto>> getParticipationRequest(@PathVariable Long userId) {
         return new ResponseEntity<>(participationRequestService.getAllRequestByUserId(userId), HttpStatus.OK);
     }
 

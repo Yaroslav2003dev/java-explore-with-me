@@ -10,10 +10,10 @@ import java.util.List;
 
 public class UserMapper {
     public static User toUser(NewUserRequest newUserRequest) {
-        User user = new User();
-        user.setEmail(newUserRequest.getEmail());
-        user.setName(newUserRequest.getName());
-        return user;
+        return User.builder()
+                .email(newUserRequest.getEmail())
+                .name(newUserRequest.getName())
+                .build();
     }
 
     public static UserDto toUserDto(User user) {

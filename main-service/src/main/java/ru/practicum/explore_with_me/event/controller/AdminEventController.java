@@ -23,7 +23,7 @@ public class AdminEventController {
     private final EventService eventService;
 
     @GetMapping
-    public ResponseEntity<List<EventFullDto>> getEventFullDtoList(@RequestParam(required = false, name = "users") List<Long> users,
+    public ResponseEntity<List<EventFullDto>> getEvents(@RequestParam(required = false, name = "users") List<Long> users,
                                                                   @RequestParam(required = false, name = "states") List<EventState> states,
                                                                   @RequestParam(required = false, name = "categories") List<Long> categories,
                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @RequestParam(required = false, name = "rangeStart") LocalDateTime rangeStart,
