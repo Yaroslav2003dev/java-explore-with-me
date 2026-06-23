@@ -3,6 +3,7 @@ package ru.practicum.explore_with_me.hit.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.explore_with_me.exception.ValidationException;
 import ru.practicum.explore_with_me.hit.dto.HitDto;
 import ru.practicum.explore_with_me.hit.mapper.HitMapper;
 import ru.practicum.explore_with_me.hit.model.Hit;
@@ -28,6 +29,9 @@ public class HitServiceImpl implements HitService {
     @Override
     public List<StatsDto> getHits(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
         List<StatsDto> statsList;
+        if (end != null && start != null && end.isBefore(start)) {
+            throw new ValidationException("Дата окончания не может быть раньше даты начала");
+        }
         if (uris != null && !uris.isEmpty()) {
             if (unique) {
                 statsList = hitRepository.findAllByListUriUniqueIp(start, end, uris);
